@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+{% load cart %}
+{% load custom_filter %}
+<div class="container">
+   <div class="border rounded p-4 m-4">
+        <p class="display-4 pl-4 ml-4">Your Orders</p>
+        <hr>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Sno.</th>
+                    <th>Image</th>
+                    <th>Map</th>
+                    <th>Product</th>
+                    <th>Date</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for order in orders %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td><img style="height: 100px;" class="rounded" src="{{order.product.image.url}}" alt=""></td>
+                    <td><a href="{% url 'Map' %}"><button style="background-color:	#ff8000;border:none;color:white;width: 100px;height:40px;" >Tracknow
+                    </button></a></td>
+                    <td>{{order.product.name}}</td>
+                    <td>{{order.date}}</td>
+                    <td>{{order.price|currency}}</td>
+                    <td>{{order.quantity}}</td>
+                    <td>{{order.quantity|multiply:order.price|currency}}</td>
+                    {% if order.status %}
+                    <td>
+                        <button type="button" class="btn btn-success"><small>Completed</small></button>
+                        <br></br>
+                        <form action="https://docs.google.com/forms/d/e/1FAIpQLSeueOPMGzRSCyHHj4q3GLfnc3LputWD6Ks0562Q8WsrR718OA/viewform?usp=pp_url"  >
+                            <input style="background-color: #ffbf00;border: none;color: white;";       type="submit" value="Feedback" />
+                        </form>
+                    </td>
+                    {%else%}
+                    <td>
+                        <button type="button" class="btn btn-danger"><small>Pending</small></button>
+                        <br></br>
+                        <!-- <form action="https://docs.google.com/forms/d/e/1FAIpQLSeueOPMGzRSCyHHj4q3GLfnc3LputWD6Ks0562Q8WsrR718OA/viewform?usp=pp_url" >
+                            <input type="submit" value="Feedback" />
+                        </form> -->
+                        <!-- <a href="https://docs.google.com/forms/d/e/1FAIpQLSeueOPMGzRSCyHHj4q3GLfnc3LputWD6Ks0562Q8WsrR718OA/viewform?usp=pp_url"><button style="background-color:darkkhaki;border:none;color:white;width: 100px;height:40px;" >Feedback
+                        </button></a> -->
+                        <form action="https://docs.google.com/forms/d/e/1FAIpQLSeueOPMGzRSCyHHj4q3GLfnc3LputWD6Ks0562Q8WsrR718OA/viewform?usp=pp_url"  >
+                            <input style="background-color: #ffbf00;border: none;color: white;";       type="submit" value="Feedback" />
+                        </form>
+                    </td>
+                    
+                    {% endif %}
+
+                </tr>
+
+                {% endfor %}
+               
+            </tbody>
+            
+
+        </table>
+        <!DOCTYPE html>
+<html>
+<!-- <head>
+  <title>Simple Checkout</title>
+  <meta id="meta" name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+</head> -->
+<body>
+  <!-- <h1>Simple Checkout</h1> -->
+
+     <div id="paypal-button-container" style="width: 20rem;" ></div>
+
+      <script src="https://www.paypal.com/sdk/js?client-id=ARLpmT2Z59pG_qwN11x14NQY56WL50NzDWalsp1NXd4v_HpwQUt4coQnfQJ1_zMgKc2okK1uDpkOtqXs&currency=USD&disable-funding=credit"></script>
+
+      <script>
+        // Render the PayPal button into #paypal-button-container
+        paypal.Buttons({
+
+             style: {
+                color:  'blue',
+                shape:  'rect',
+                label:  'pay',
+                height: 40
+            },
+
+            // Set up the transaction
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '1.01'
+                        }
+                    }]
+                });
+            },
+
+            // Finalize the transaction
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    // Show a success message to the buyer
+                    alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                });
+            }
+
+
+        }).render('#paypal-button-container');
+    </script>
+
+</body>
+</html>
+       
+   </div>
+</div>
+
+
+
+
+
+{% endblock %}

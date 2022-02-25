@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+<!--Body-->
+
+{% block content %}
+{% load cart %}
+{% load custom_filter %}
+<div id='restaurants' class="col-lg-9 mx-auto mt-3  ">
+    <div class="row mx-auto">
+      {% for restaurant in restaurants %}
+      <div class="card mx-auto mb-3 " id = {{restaurants.id}} style="width: 16rem; background-color: yellowgreen;">
+        <img src="{{restaurants.image.url}}" class="card-img-top" alt="..."style="height: 250px;">
+        <div class="card-body">
+
+          <p class="card-title">{{restaurants.name}}</p>
+          <p class="card-text"><b>{{restaurants.number_of_tables}}</b></p>
+          <p class="card-text"><b>{{restaurants.description}}</b></p>
+
+          <!--{{product | is_in_cart:request.session.cart}}-->
+
+          <form action="/" method="POST">
+            {% csrf_token %}
+            <input hidden type="text" name='restaurants' value='{{restaurants.id}}'>
+
+          </form>
+
+
+        </div>
+        <div class="card-footer p-0 no-gutters">
+
+          {% if restaurants|is_in_cart:request.session.cart %}
+          <div class="row no-gutters">
+            <form action="/#{{restaurants.id}}" id = {{restaurants.id}} class="col-2 " method="post">
+              {% csrf_token %}
+              <input hidden type="text" name='restaurants' value='{{restaurants.id}}'>
+              <input hidden type="text" name='remove' value='True'>
+              <input type="submit" value=" - " class="btn btn-block btn btn-warning border-right">
+            </form>
+            <div class="text-center col">{{restaurants|cart_quantity:request.session.cart}} in Cart</div>
+            <form action="/#{{restaurants.id}}" class="col-2 " method="post">
+              {% csrf_token %}
+              <input hidden type="text" name='restaurants' value='{{restaurants.id}}'>
+              <input type="submit" value=" + " class="btn btn-block btn btn-warning border-left">
+            </form>
+          </div>
+          {% else %}
+          <form action="/#{{restaurants.id}}" method="POST" class="btn-block">
+            {% csrf_token %}
+            <input hidden type="text" name='restaurants' value='{{restaurants.id}}'>
+            <input type="submit" class="float-right btn btn-dark  form-control"
+              value="Add To Cart">
+          </form>
+          {% endif %}
+
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>

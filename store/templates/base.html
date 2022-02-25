@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+  <title >Hungry Helpers!</title>
+</head>
+<!--Nav-bar-->
+
+<nav class="navbar navbar-expand-lg navbar-light " style="background-color: yellowgreen;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/" style="color: white;">Hungry Helpers</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-0 mb-lg-0">
+      </ul>
+
+      <ul class="navbar-nav me-0">
+        <div class="align-self-center">
+          <div class="form-outline" >
+            <input type="search" id="form1" class="form-control" placeholder="Search" />
+            <!-- <label class="align-self-center" for="form1">Search</label> -->
+          </div>
+        <!--<button type="button" class="btn btn-primary">
+          <i class="fas fa-search"></i>
+        </button>-->
+        </div>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/cart" style="color: white;">Cart<span class="badge badge-black">{{request.session.cart.keys|length}}</span></a>
+        </li>
+
+
+
+      <ul class="navbar-nav me-0">
+
+
+
+        {% if request.session.customer %}
+        <li class="nav-item ">
+          <a class="nav-link" href="{% url 'email' %}" style="color: white;">Contactus<span class="sr-only"></span></a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" href="/orders" style="color: white;">Orders<span class="sr-only"></span></a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" href="/logout" style="color: white;">Logout<span class="sr-only"></span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/pie-chart" style="color: white;">Pie-Chart</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/signup" style="color: white;">Sign-up</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/login" style="color: white;">Login</a>
+        </li>
+        {% endif %}
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    {% block content %}{% endblock %}
+
+  <!-- Optional JavaScript; choose one of the two! -->
+
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+    crossorigin="anonymous"></script>
+
+
+<!-- Option 2: Separate Popper and Bootstrap JS -->
+  <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
+    -->
+</body>
+<body class="d-flex flex-column">
+  <!-- For demo purpose -->
+  <div class="container-fluid flex-grow-1 flex-shrink-0">
+    <div class="px-lg-5">
+      <div class="row py-5">
+        <div class="col-lg-12 mx-auto text-white text-center">
+          <h1 class="display-4">HungryHelpers</h1>
+          <p class="lead mb-0">Exercising should be about rewarding the body with endorphins and strength. Not about punishing your body for what you’ve eaten.</p>
+          <!-- <p class="lead">Snippet by <a href="https://bootstrapious.com/snippets" class="text-white">
+                        <u>Bootstrapious</u></a> -->
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End -->
+  
+
+  <style>
+    body {
+    background: #ff5f6d;
+    background: -webkit-linear-gradient(to right, #ff5f6d, #ffc371);
+    background: linear-gradient(to right, #ff5f6d, #ffc371);
+    min-height: 100vh;
+  }
+
+  #button-addon1 {
+    color: #ffc371;
+  }
+
+  i {
+    color: #ffc371;
+  }
+
+  .form-control::placeholder {
+    font-size: 0.95rem;
+    color: #aaa;
+    font-style: italic;
+  }
+
+  .form-control.shadow-0:focus {
+    box-shadow: none;
+  }
+  </style>
+  <style>
+    .fa {
+      padding: 30px;
+      font-size: 30px;
+      width: 50px;
+      text-align: center;
+      text-decoration: none;
+      margin: 5px 2px;
+    }
+
+    .fa:hover {
+        opacity: 0.7;
+    }
+
+    .fa-facebook {
+      background: #3B5998;
+      color: white;
+    }
+
+    .fa-twitter {
+      background: #55ACEE;
+      color: white;
+    }
+
+    .fa-google {
+      background: #dd4b39;
+      color: white;
+    }
+
+    .fa-linkedin {
+      background: #007bb5;
+      color: white;
+    }
+
+    .fa-youtube {
+      background: #bb0000;
+      color: white;
+    }
+
+    .fa-pinterest {
+      background: #cb2027;
+      color: white;
+    }
+    </style>
+
+  <!-- Footer -->
+  <footer class="bg-white">
+    <div class="container py-5">
+      <div class="row py-4">
+        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0"><img src="img/logo.png" alt="" width="180" class="mb-3">
+          <p class="font-italic text-muted">WHEN DIET IS WRONG, MEDICINE IS OF NO USE. WHEN DIET IS CORRECT, MEDICINE IS OF NO NEED</p>
+          <!-- <ul class="list-inline mt-4">
+            <li class="list-inline-item"><a href="#" target="_blank" title="twitter"><i class="fa fa-twitter"></i></a></li>
+            <li class="list-inline-item"><a href="#" target="_blank" title="facebook"><i class="fa fa-facebook"></i></a></li>
+            <li class="list-inline-item"><a href="#" target="_blank" title="instagram"><i class="fa fa-instagram"></i></a></li>
+            <li class="list-inline-item"><a href="#" target="_blank" title="pinterest"><i class="fa fa-pinterest"></i></a></li>
+            <li class="list-inline-item"><a href="#" target="_blank" title="vimeo"><i class="fa fa-vimeo"></i></a></li>
+          </ul> -->
+
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+          <div class="wrapper" >
+            <a href="http://www.google.com"><i class="fa fa-3x fa-google-plus"></i></a>
+            <a href="http://www.facebook.com"><i class="fa fa-3x fa-facebook-square"></i></a>
+            <a href="http://www.twitter.com"><i class="fa fa-3x fa-twitter-square"></i></a>
+          </div>
+
+        </div>
+
+        <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+          <h6 class="text-uppercase font-weight-bold mb-4">Items</h6>
+          <ul class="list-unstyled mb-0">
+
+
+<li class="mb-2"><a href="#" class="text-muted">Veg</a></li>
+            <li class="mb-2"><a href="#" class="text-muted">Non Veg</a></li>
+            <li class="mb-2"><a href="#" class="text-muted">Pastry</a></li>
+            <li class="mb-2"><a href="#" class="text-muted">Chinese</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+          <h6 class="text-uppercase font-weight-bold mb-4">Company</h6>
+          <ul class="list-unstyled mb-0">
+            <li class="mb-2"><a href="#" class="text-muted">Login</a></li>
+            <li class="mb-2"><a href="#" class="text-muted">Register</a></li>
+            <li class="mb-2"><a href="#" class="text-muted">Cart</a></li>
+            <li class="mb-2"><a href="/orders" class="text-muted">Orders</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-lg-0">
+          <!-- <h6 class="text-uppercase font-weight-bold mb-4">Newsletter</h6> -->
+          <p class="text-muted mb-4">Nutrients are substances that provide: energy for activity, growth, and all functions of the body such as breathing, digesting food, and keeping warm; materials for the growth and repair of the body, and for keeping the immune system healthy.</p>
+          <!-- <div class="p-1 rounded border">
+            <div class="input-group">
+              <input type="email" placeholder="Enter your email address" aria-describedby="button-addon1" class="form-control border-0 shadow-0">
+              <div class="input-group-append">
+                <button id="button-addon1" type="submit" class="btn btn-link"><i class="fa fa-paper-plane"></i></button>
+              </div>
+            </div>
+          </div> -->
+          <!-- <div>
+            <button style="font-style: oblique;" href="https://docs.google.com/forms/d/e/1FAIpQLSeueOPMGzRSCyHHj4q3GLfnc3LputWD6Ks0562Q8WsrR718OA/viewform?usp=pp_url">Feedback</button>
+          </div>-->
+          <form action="https://docs.google.com/forms/d/e/1FAIpQLSeueOPMGzRSCyHHj4q3GLfnc3LputWD6Ks0562Q8WsrR718OA/viewform?usp=pp_url"  >
+            <input style="background-color: #ffbf00;border: none;color: white;";       type="submit" value="Feedback" />
+        </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Copyrights -->
+    <div class="bg-light py-4">
+      <div class="container text-center">
+        <p class="text-muted mb-0 py-2">© 2021 All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  <!-- End -->
+
+</body>
+
+</html>

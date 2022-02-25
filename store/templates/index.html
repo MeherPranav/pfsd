@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+<!--Body-->
+
+{% block content %}
+{% load cart %}
+{% load custom_filter %}
+
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="https://img.lovepik.com//back_pic/05/68/66/545b8c8e793c8b5.jpg_wh300.jpg" class="d-block w-100" alt="First slide" style="height: 500px;">
+      <div class="carousel-caption d-none d-md-block">
+        <h5></h5>
+        <p></p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="https://wallpaperaccess.com/full/767277.jpg" class="d-block w-100" alt="Second slide" height="500px">
+      <div class="carousel-caption d-none d-md-block">
+        <h5></h5>
+        <p></p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="https://wallpaperaccess.com/full/767252.jpg" class="d-block w-100" alt="Third slide" height="500px">
+      <div class="carousel-caption d-none d-md-block">
+        <h5></h5>
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+ <div style="background-color:white">
+    <div class="container-fluid mt-0 bg-gradient-secondary">
+      <div class="row">
+
+        <!--Filter-->
+
+         <div class="col-lg-3 mx-auto ">
+          <br><br>
+          <div class="list-group">
+            {% for category in categories %}
+
+            <a href="/?category={{category.id}}" class="list-group-item list-group-item-action " style="background-color: yellowgreen;">{{category.name}}</a>
+            {% endfor %}
+          </div>
+         </div>
+        <!--All Products-->
+        <div id='products' class="col-lg-9 mx-auto mt-3  ">
+          <div class="row mx-auto">
+            {% for product in products %}
+            <div class="card mx-auto mb-3 " id = {{product.id}} style="width: 16rem; background-color: chartreuse;">
+              <img src="{{product.image.url}}" class="card-img-top" alt="..."style="height: 250px;">
+              <div class="card-body">
+
+                <p class="card-title">{{product.name}}</p>
+                <p class="card-text"><b>{{product.price}}</b></p>
+                <p class="card-text"><b>{{product.description}}</b></p>
+
+                <!--{{product | is_in_cart:request.session.cart}}-->
+
+                <form action="/" method="POST">
+                  {% csrf_token %}
+                  <input hidden type="text" name='product' value='{{product.id}}'>
+
+                </form>
+
+
+              </div>
+              <div class="card-footer p-0 no-gutters">
+
+                {% if product|is_in_cart:request.session.cart %}
+                <div class="row no-gutters">
+                  <form action="/#{{product.id}}" id = {{product.id}} class="col-2 " method="post">
+                    {% csrf_token %}
+                    <input hidden type="text" name='product' value='{{product.id}}'>
+                    <input hidden type="text" name='remove' value='True'>
+                    <input type="submit" value=" - " class="btn btn-block btn btn-warning border-right">
+                  </form>
+                  <div class="text-center col">{{product|cart_quantity:request.session.cart}} in Cart</div>
+                  <form action="/#{{product.id}}" class="col-2 " method="post">
+                    {% csrf_token %}
+                    <input hidden type="text" name='product' value='{{product.id}}'>
+                    <input type="submit" value=" + " class="btn btn-block btn btn-warning border-left">
+                  </form>
+                </div>
+                {% else %}
+                <form action="/#{{product.id}}" method="POST" class="btn-block">
+                  {% csrf_token %}
+                  <input hidden type="text" name='product' value='{{product.id}}'>
+                  <input type="submit" class="float-right btn btn-dark  form-control"
+                    value="Add To Cart">
+                </form>
+                {% endif %}
+
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}
