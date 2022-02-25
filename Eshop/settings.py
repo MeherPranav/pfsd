@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'mx1q1z6wo!2u1ib_e6tl2anszs-%4oy8jwu=pu5h54=8zz5dhj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://pm-mini.herokuapp.com/','localhost','127.0.0.1']
 
 
 # Application definition
